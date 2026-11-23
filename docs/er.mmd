@@ -1,0 +1,131 @@
+---
+title: Mobilidade Urbana Sustentavel - MySQL 8.0 (InnoDB, utf8mb4)
+---
+erDiagram
+    USUARIO {
+        BIGINT id_usuario PK "UNSIGNED AUTO_INCREMENT"
+        VARCHAR(120) nome "NOT NULL"
+        VARCHAR(254) email UK "NOT NULL"
+        CHAR(64) cpf_hash UK "SHA-256 (LGPD)"
+        DATE data_nascimento
+        SMALLINT id_modal_preferido FK "UNSIGNED, NULL"
+        DATETIME criado_em "UTC, DEFAULT CURRENT_TIMESTAMP"
+        BOOLEAN ativo "DEFAULT TRUE"
+    }
+    MODAL_TRANSPORTE {
+        SMALLINT id_modal PK "UNSIGNED AUTO_INCREMENT"
+        VARCHAR(20) codigo UK "ex: ONIBUS, METRO"
+        VARCHAR(60) nome "NOT NULL"
+        ENUM categoria "ativo | coletivo | individual"
+        BOOLEAN sustentavel "NOT NULL"
+        BOOLEAN referencia_comparacao "TRUE so p/ carro"
+        TINYINT ref_unica UK "GENERATED: IF(ref,1,NULL)"
+    }
+    FONTE_REFERENCIA {
+        INT id_fonte PK "UNSIGNED AUTO_INCREMENT"
+        VARCHAR(80) orgao "ex: Metro-SP, MCTI"
+        VARCHAR(250) titulo
+        SMALLINT ano_publicacao "UNSIGNED"
+        VARCHAR(500) url
+    }
+    FATOR_EMISSAO {
+        INT id_fator PK "UNSIGNED AUTO_INCREMENT"
+        SMALLINT id_modal FK "UNSIGNED NOT NULL"
+        INT id_fonte FK "UNSIGNED, NULL se estimativa"
+        DECIMAL(8,3) g_co2_pkm "CHECK >= 0"
+        BOOLEAN estimativa
+        DATE vigencia_inicio "NOT NULL"
+        DATE vigencia_fim "NULL = vigente"
+    }
+    LOCAL {
+        BIGINT id_local PK "UNSIGNED AUTO_INCREMENT"
+        VARCHAR(150) nome
+        ENUM tipo "estacao | ponto_onibus | endereco"
+        POINT geom "SRID 4326 NOT NULL, SPATIAL"
+    }
+    SEGMENTO_VIA {
+        BIGINT id_segmento PK "UNSIGNED AUTO_INCREMENT"
+        VARCHAR(150) nome_via
+        LINESTRING geom "SRID 4326 NOT NULL, SPATIAL"
+        SMALLINT velocidade_max_kmh "UNSIGNED, CHECK > 0"
+        BOOLEAN possui_ciclovia
+        BOOLEAN faixa_onibus
+    }
+    SENSOR {
+        INT id_sensor PK "UNSIGNED AUTO_INCREMENT"
+        BIGINT id_segmento FK "UNSIGNED NOT NULL"
+        ENUM tipo "laco | camera | gps_frota"
+        POINT geom "SRID 4326 NOT NULL, SPATIAL"
+        DATE instalado_em
+        ENUM status "ativo | manutencao | inativo"
+    }
+    LEITURA_TRAFEGO {
+        BIGINT id_leitura PK "UNSIGNED AUTO_INCREMENT"
+        INT id_sensor FK "UNSIGNED; UK(id_sensor, registrado_em)"
+        DATETIME(3) registrado_em "UTC, sem particionamento"
+        DECIMAL(5,1) velocidade_media_kmh "CHECK >= 0"
+        INT volume_veiculos "UNSIGNED"
+        TINYINT nivel_congestionamento "UNSIGNED, CHECK 0..5"
+    }
+    LINHA_TRANSPORTE {
+        INT id_linha PK "UNSIGNED AUTO_INCREMENT"
+        SMALLINT id_modal FK "UNSIGNED NOT NULL"
+        VARCHAR(20) codigo UK "ex: 875A-10"
+        VARCHAR(150) nome
+        VARCHAR(100) operadora
+        LINESTRING geom_trajeto "SRID 4326 NOT NULL, SPATIAL"
+    }
+    VIAGEM {
+        BIGINT id_viagem PK "UNSIGNED AUTO_INCREMENT"
+        BIGINT id_usuario FK "UNSIGNED NOT NULL"
+        BIGINT id_local_origem FK "UNSIGNED NOT NULL"
+        BIGINT id_local_destino FK "CHECK <> origem"
+        DATETIME inicio "UTC NOT NULL"
+        DATETIME fim "NULL; CHECK > inicio"
+        ENUM status "planejada | em_curso | concluida | cancelada"
+    }
+    TRECHO_VIAGEM {
+        BIGINT id_trecho PK "UNSIGNED AUTO_INCREMENT"
+        BIGINT id_viagem FK "ON DELETE CASCADE"
+        TINYINT ordem "UNSIGNED; UK(id_viagem, ordem)"
+        SMALLINT id_modal FK "UNSIGNED NOT NULL"
+        INT id_linha FK "UNSIGNED NULL; trigger coerencia"
+        DATETIME inicio "UTC NOT NULL"
+        DATETIME fim "CHECK > inicio"
+        DECIMAL(7,3) distancia_km "CHECK > 0"
+        LINESTRING geom_percurso "SRID 4326, NULL, sem SPATIAL"
+    }
+    TRECHO_SEGMENTO {
+        BIGINT id_trecho PK, FK "UNSIGNED, ON DELETE CASCADE"
+        BIGINT id_segmento PK, FK "UNSIGNED"
+        SMALLINT ordem "UNSIGNED NOT NULL"
+    }
+    SUGESTAO_MODAL {
+        BIGINT id_sugestao PK "UNSIGNED AUTO_INCREMENT"
+        BIGINT id_viagem FK "UNSIGNED, ON DELETE CASCADE"
+        SMALLINT id_modal_sugerido FK "UNSIGNED; trigger: sustentavel"
+        INT id_linha FK "UNSIGNED NULL"
+        DECIMAL(7,3) distancia_estimada_km "CHECK > 0"
+        SMALLINT duracao_estimada_min "UNSIGNED, CHECK > 0"
+        ENUM motivo "congestionamento | menor_co2 | menor_tempo"
+        DATETIME gerada_em "UTC, DEFAULT CURRENT_TIMESTAMP"
+        BOOLEAN aceita "NULL ate resposta"
+    }
+
+    USUARIO ||--o{ VIAGEM : realiza
+    MODAL_TRANSPORTE |o--o{ USUARIO : "preferido por"
+    MODAL_TRANSPORTE ||--|{ FATOR_EMISSAO : "possui (historico)"
+    FONTE_REFERENCIA |o--o{ FATOR_EMISSAO : fundamenta
+    MODAL_TRANSPORTE ||--o{ LINHA_TRANSPORTE : opera
+    SEGMENTO_VIA ||--o{ SENSOR : monitorado_por
+    SENSOR ||--o{ LEITURA_TRAFEGO : registra
+    LOCAL ||--o{ VIAGEM : "origem de"
+    LOCAL ||--o{ VIAGEM : "destino de"
+    VIAGEM ||--|{ TRECHO_VIAGEM : "composta por"
+    MODAL_TRANSPORTE ||--o{ TRECHO_VIAGEM : "usado em"
+    LINHA_TRANSPORTE |o--o{ TRECHO_VIAGEM : "percorrida em"
+    TRECHO_VIAGEM ||--o{ TRECHO_SEGMENTO : passa_por
+    SEGMENTO_VIA ||--o{ TRECHO_SEGMENTO : "faz parte de"
+    VIAGEM ||--o{ SUGESTAO_MODAL : recebe
+    MODAL_TRANSPORTE ||--o{ SUGESTAO_MODAL : "sugerido em"
+    LINHA_TRANSPORTE |o--o{ SUGESTAO_MODAL : "indicada em"

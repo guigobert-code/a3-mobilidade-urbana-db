@@ -1,0 +1,164 @@
+{
+  "accessed_utc": "2026-11-18",
+  "gtfs_sha256_16": "45f3cc1ca7d118a2",
+  "gtfs_zip": "data/cache/sptrans_gtfs.zip",
+  "n_linhas": 18,
+  "n_locais": 60,
+  "n_segmentos": 10,
+  "linhas": [
+    {
+      "id_linha": 1,
+      "route_id": "METRÔ L1",
+      "codigo": "L1",
+      "shape_id": "17838",
+      "operadora": "Metrô-SP"
+    },
+    {
+      "id_linha": 2,
+      "route_id": "METRÔ L2",
+      "codigo": "L2",
+      "shape_id": "17841",
+      "operadora": "Metrô-SP"
+    },
+    {
+      "id_linha": 3,
+      "route_id": "METRÔ L3",
+      "codigo": "L3",
+      "shape_id": "17842",
+      "operadora": "Metrô-SP"
+    },
+    {
+      "id_linha": 4,
+      "route_id": "METRÔ L4",
+      "codigo": "L4",
+      "shape_id": "40777",
+      "operadora": "ViaQuatro / Metrô-SP"
+    },
+    {
+      "id_linha": 5,
+      "route_id": "METRÔ L5",
+      "codigo": "L5",
+      "shape_id": "17844",
+      "operadora": "ViaMobilidade / Metrô-SP"
+    },
+    {
+      "id_linha": 6,
+      "route_id": "CPTM L07",
+      "codigo": "L07",
+      "shape_id": "17846",
+      "operadora": "CPTM"
+    },
+    {
+      "id_linha": 7,
+      "route_id": "CPTM L08",
+      "codigo": "L08",
+      "shape_id": "17848",
+      "operadora": "CPTM"
+    },
+    {
+      "id_linha": 8,
+      "route_id": "CPTM L09",
+      "codigo": "L09",
+      "shape_id": "17850",
+      "operadora": "CPTM"
+    },
+    {
+      "id_linha": 9,
+      "route_id": "875A-10",
+      "codigo": "875A-10",
+      "shape_id": "84740",
+      "operadora": "SPTrans"
+    },
+    {
+      "id_linha": 10,
+      "route_id": "702U-22",
+      "codigo": "702U-22",
+      "shape_id": "80043",
+      "operadora": "SPTrans"
+    },
+    {
+      "id_linha": 11,
+      "route_id": "177Y-10",
+      "codigo": "177Y-10",
+      "shape_id": "63737",
+      "operadora": "SPTrans"
+    },
+    {
+      "id_linha": 12,
+      "route_id": "917H-10",
+      "codigo": "917H-10",
+      "shape_id": "82568",
+      "operadora": "SPTrans"
+    },
+    {
+      "id_linha": 13,
+      "route_id": "675A-10",
+      "codigo": "675A-10",
+      "shape_id": "85949",
+      "operadora": "SPTrans"
+    },
+    {
+      "id_linha": 14,
+      "route_id": "509M-10",
+      "codigo": "509M-10",
+      "shape_id": "71820",
+      "operadora": "SPTrans"
+    },
+    {
+      "id_linha": 15,
+      "route_id": "5154-10",
+      "codigo": "5154-10",
+      "shape_id": "85945",
+      "operadora": "SPTrans"
+    },
+    {
+      "id_linha": 16,
+      "route_id": "107T-10",
+      "codigo": "107T-10",
+      "shape_id": "82808",
+      "operadora": "SPTrans"
+    },
+    {
+      "id_linha": 17,
+      "route_id": "930P-10",
+      "codigo": "930P-10",
+      "shape_id": "57027",
+      "operadora": "SPTrans"
+    },
+    {
+      "id_linha": 18,
+      "route_id": "2002-10",
+      "codigo": "2002-10",
+      "shape_id": "83063",
+      "operadora": "SPTrans"
+    }
+  ],
+  "segmentos_osm_way_ids": [
+    261785599,
+    231341013,
+    329094557,
+    426510608,
+    405489974,
+    935573768,
+    241249687,
+    286269721,
+    768961582,
+    96085719
+  ],
+  "sources": {
+    "gtfs": "https://www.sptrans.com.br/desenvolvedores/ (BaixarGTFS; cadastro). Espelho usado: Mobility Database mdb-8 / GCS mdb-latest.",
+    "osm": "https://www.openstreetmap.org/copyright (ODbL 1.0)",
+    "olhovivo": {
+      "api": "https://api.olhovivo.sptrans.com.br/v2.1",
+      "endpoint": "GET /Posicao",
+      "window_america_sao_paulo": "2026-11-19 08:33–09:17",
+      "token_env": "SPTRANS_OLHOVIVO_TOKEN",
+      "sql": "fontes/olhovivo/leitura_trafego_real.sql",
+      "method": "fontes/olhovivo/METODO.md",
+      "notes": "velocidade de ônibus (com paradas); volume=nº ônibus; nivel derivado; sensores 9–10 inativos (Marginal)"
+    }
+  },
+  "n_sensores": 10,
+  "n_leituras_trafego": 59,
+  "sensor_leitura_source": "fontes/olhovivo/leitura_trafego_real.sql"
+}

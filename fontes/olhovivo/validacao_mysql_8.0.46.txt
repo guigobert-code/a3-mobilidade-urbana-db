@@ -1,0 +1,124 @@
+status
+Seed concluído (dados reais + simulados)
+tabela	n
+usuario	5
+modal_transporte	8
+fonte_referencia	4
+fator_emissao	9
+local	60
+segmento_via	10
+sensor	10
+leitura_trafego	59
+linha_transporte	18
+viagem	7
+trecho_viagem	8
+trecho_segmento	9
+sugestao_modal	5
+relatorio
+=== 1) CO₂ por usuário ===
+id_usuario	nome	qtd_viagens	distancia_total_km	co2_total_g
+4	Diego Mock Pereira	1	6.610	793.200
+3	Carla Demo Souza	1	7.335	586.800
+5	Elena Sample Costa	1	7.766	23.298
+1	Ana Fictícia Silva	1	6.276	8.607
+2	Bruno Teste Oliveira	1	3.775	0.000
+relatorio
+=== 2) CO₂ por modal ===
+codigo	nome	categoria	qtd_trechos	distancia_total_km	co2_total_g
+CARRO_GASOLINA	Carro a gasolina	individual	1	6.610	793.200
+ONIBUS	Ônibus municipal	coletivo	1	7.335	586.800
+METRO	Metrô	coletivo	3	14.768	44.304
+A_PE	A pé	ativo	1	1.166	0.000
+BICICLETA	Bicicleta	ativo	2	7.182	0.000
+BIKE_ELETRICA	Bicicleta/patinete elétrico	ativo	0	0.000	0.000
+TREM	Trem metropolitano (CPTM)	coletivo	0	0.000	0.000
+MOTOCICLETA	Motocicleta	individual	0	0.000	0.000
+relatorio
+=== 3) CO₂ por linha/rota ===
+codigo	nome	operadora	codigo_modal	qtd_trechos	distancia_total_km	co2_total_g
+702U-22	Metrô Butantã - Term. Pq. D. Pedro Ii	SPTrans	ONIBUS	1	7.335	586.800
+L4	METRÔ L4 — SÃO PAULO - MORUMBI - LUZ	ViaQuatro / Metrô-SP	METRO	1	7.766	23.298
+L1	METRÔ L1 — TUCURUVI - JABAQUARA	Metrô-SP	METRO	1	4.133	12.399
+L2	METRÔ L2 — VILA MADALENA - VILA PRUDENTE	Metrô-SP	METRO	1	2.869	8.607
+L5	METRÔ L5 — CAPAO REDONDO - CHÁCARA KLABIN	ViaMobilidade / Metrô-SP	METRO	0	0.000	0.000
+L07	CPTM L07 — JUNDIAI - LUZ	CPTM	TREM	0	0.000	0.000
+L08	CPTM L08 — AMADOR BUENO - JULIO PRESTES	CPTM	TREM	0	0.000	0.000
+L09	CPTM L09 — VARGINHA - OSASCO	CPTM	TREM	0	0.000	0.000
+875A-10	Aeroporto - Perdizes	SPTrans	ONIBUS	0	0.000	0.000
+L3	METRÔ L3 — CORINTHIANS - ITAQUERA - PALMEIRAS - BARRA FUNDA	Metrô-SP	METRO	0	0.000	0.000
+177Y-10	Metrô Barra Funda - Pinheiros	SPTrans	ONIBUS	0	0.000	0.000
+917H-10	Term. Pirituba - Metrô Vl. Mariana	SPTrans	ONIBUS	0	0.000	0.000
+675A-10	Pq. Sto. Antonio - Metrô São Judas	SPTrans	ONIBUS	0	0.000	0.000
+509M-10	Jd. Miriam - Term. Princ. Isabel	SPTrans	ONIBUS	0	0.000	0.000
+5154-10	Term. Sto. Amaro - Term. Princ. Isabel	SPTrans	ONIBUS	0	0.000	0.000
+107T-10	Metrô Tucuruvi - Term. Pinheiros	SPTrans	ONIBUS	0	0.000	0.000
+930P-10	Term. Pq. D. Pedro Ii - Term. Pinheiros	SPTrans	ONIBUS	0	0.000	0.000
+2002-10	Term. Pq. D. Pedro Ii - Term. Bandeira	SPTrans	ONIBUS	0	0.000	0.000
+relatorio
+=== 4) Economia vs carro (por trecho) ===
+id_viagem	codigo_modal	distancia_km	co2_trecho_g	co2_se_carro_g	economia_vs_carro_g
+5	METRO	7.766	23.298	931.920	908.622
+6	METRO	4.133	12.399	495.960	483.561
+2	BICICLETA	3.775	0.000	453.000	453.000
+1	BICICLETA	3.407	0.000	408.840	408.840
+1	METRO	2.869	8.607	344.280	335.673
+3	ONIBUS	7.335	586.800	880.200	293.400
+6	A_PE	1.166	0.000	139.920	139.920
+4	CARRO_GASOLINA	6.610	793.200	793.200	0.000
+relatorio
+=== 5) Economia mensal por usuário ===
+id_usuario	nome_usuario	ano_mes	qtd_viagens	distancia_km	co2_emitido_g	co2_se_carro_g	economia_vs_carro_g
+5	Elena Sample Costa	2026-11	1	7.766	23.298	931.920	908.622
+1	Ana Fictícia Silva	2026-11	1	6.276	8.607	753.120	744.513
+2	Bruno Teste Oliveira	2026-11	1	3.775	0.000	453.000	453.000
+3	Carla Demo Souza	2026-11	1	7.335	586.800	880.200	293.400
+4	Diego Mock Pereira	2026-11	1	6.610	793.200	793.200	0.000
+relatorio
+=== 6) Ranking de congestionamento atual ===
+id_segmento	nome_via	nivel_congestionamento	velocidade_media_kmh	volume_veiculos	registrado_em	possui_ciclovia	faixa_onibus
+1	Avenida Paulista [OSM way 261785599]	5	4.4	4	2026-11-19 12:15:00.000	0	1
+2	Avenida Paulista [OSM way 231341013]	4	6.9	9	2026-11-19 12:10:00.000	0	1
+5	Rua da Consolação [OSM way 405489974]	4	7.0	5	2026-11-19 12:15:00.000	1	1
+8	Avenida Vinte e Três de Maio [OSM way 286269721]	3	17.0	2	2026-11-19 12:15:00.000	0	0
+6	Rua da Consolação [OSM way 935573768]	3	19.4	5	2026-11-19 12:15:00.000	1	1
+4	Avenida Rebouças [OSM way 426510608]	2	22.8	4	2026-11-19 12:15:00.000	1	1
+7	Avenida Vinte e Três de Maio [OSM way 241249687]	2	25.1	5	2026-11-19 12:15:00.000	0	0
+3	Avenida Rebouças [OSM way 329094557]	0	36.5	3	2026-11-19 12:15:00.000	1	1
+relatorio
+=== 7) Taxa de aceitação de sugestões ===
+total_sugestoes	aceitas	recusadas	sem_resposta	taxa_aceitacao_pct
+5	2	2	1	50.00
+relatorio
+=== 8) Emissão detalhada por trecho ===
+id_viagem	ordem	codigo_modal	codigo_linha	distancia_km	g_co2_pkm	co2_trecho_g
+1	1	BICICLETA	NULL	3.407	0.000	0.000
+1	2	METRO	L2	2.869	3.000	8.607
+2	1	BICICLETA	NULL	3.775	0.000	0.000
+3	1	ONIBUS	702U-22	7.335	80.000	586.800
+4	1	CARRO_GASOLINA	NULL	6.610	120.000	793.200
+5	1	METRO	L4	7.766	3.000	23.298
+6	1	A_PE	NULL	1.166	0.000	0.000
+6	2	METRO	L1	4.133	3.000	12.399
+relatorio
+=== 9) Top usuários por economia de CO₂ ===
+id_usuario	nome	economia_total_g	economia_total_kg
+5	Elena Sample Costa	908.622	0.909
+1	Ana Fictícia Silva	744.513	0.745
+2	Bruno Teste Oliveira	453.000	0.453
+3	Carla Demo Souza	293.400	0.293
+4	Diego Mock Pereira	0.000	0.000
+id	teste	esperado	obtido	detalhe
+1	T1 CHECK distancia_km > 0	REJEITADO	REJEITADO	Check constraint 'chk_trecho_dist' is violated.
+2	T2 CHECK destino <> origem	REJEITADO	REJEITADO	Check constraint 'chk_viagem_destino_diff' is violated.
+3	T3 CHECK nivel_congestionamento	REJEITADO	REJEITADO	Check constraint 'chk_leitura_nivel' is violated.
+4	T4 UNIQUE email	REJEITADO	REJEITADO	Duplicate entry 'ana.ficticia@exemplo.sp.br' for key 'usuario.uk_usuario_email'
+5	T5 UNIQUE ref_unica (1 carro)	REJEITADO	REJEITADO	Duplicate entry '1' for key 'modal_transporte.uk_modal_ref_unica'
+6	T6 Trigger sobreposição fator	REJEITADO	REJEITADO	Sobreposição de vigência de fator_emissao para o mesmo modal.
+7	T7 Trigger modal≠linha no trecho	REJEITADO	REJEITADO	id_modal do trecho deve coincidir com id_modal da linha.
+8	T8 Trigger sugestão sustentavel	REJEITADO	REJEITADO	Só é permitido sugerir modal com sustentavel = TRUE.
+9	T9 FK leitura→sensor	REJEITADO	REJEITADO	Cannot add or update a child row: a foreign key constraint fails (`mobilidade_urbana`.`leitura_trafego`, CONSTRAINT `fk_leitura_sensor` FOREIGN KEY (`id_sensor`) REFERENCES `sensor` (`id_sensor`) ON DELETE RESTRICT ON UPDATE RESTRICT)
+10	T10 ROLLBACK sp_registrar_viagem	ROLLBACK	ROLLBACK	id_modal do trecho deve coincidir com id_modal da linha.
+11	T11 sp_registrar_viagem sucesso	OK	OK	id_viagem=9 Viagem registrada com sucesso.
+12	T12 CHECK estimativa/fonte	REJEITADO	REJEITADO	Check constraint 'chk_fator_estimativa_fonte' is violated.
+testes_ok	testes_falhos	total
+12	0	12
